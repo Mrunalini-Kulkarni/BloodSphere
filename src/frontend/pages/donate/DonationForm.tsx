@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 export const DonationForm = () => {
   const [step, setStep] = useState(1);
+  const [selectedCenter, setSelectedCenter] = useState<string | null>(null); // Store selected center
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -20,7 +21,7 @@ export const DonationForm = () => {
       id: uuidv4(),
       date: formData.get('date') as string,
       time: formData.get('time') as string,
-      location: formData.get('location') as string,
+      location: selectedCenter, // Use the selected center from state
       status: 'upcoming' as const,
       type: 'donation' as const
     };
@@ -52,29 +53,29 @@ export const DonationForm = () => {
           <div className="space-y-4">
             <h2 className="text-2xl font-bold">Select Donation Center</h2>
             <div className="grid gap-4">
-              {['Central Blood Bank', 'City Hospital', 'Community Center'].map((center) => (
-                <label key={center} className="border rounded-lg p-4 hover:border-red-500 cursor-pointer">
-                  <input
-                    type="radio"
-                    name="location"
-                    value={center}
-                    className="sr-only"
-                    required
-                  />
+              {['Parul Sevashram Hospital', 'Aadicura Superspeciality Hospital', 'Sterling Hospital'].map((center) => (
+                <div
+                  key={center}
+                  onClick={() => setSelectedCenter(center)} // Set selected center on click
+                  className={`border rounded-lg p-4 hover:border-red-500 cursor-pointer ${
+                    selectedCenter === center ? 'border-red-500' : ''
+                  }`}
+                >
                   <div className="flex items-start">
                     <MapPin className="h-5 w-5 text-red-500 mt-1" />
                     <div className="ml-3">
                       <h3 className="font-semibold">{center}</h3>
-                      <p className="text-sm text-gray-500">123 Main St, City</p>
+                      <p className="text-sm text-gray-500">Vadodara, Gujarat</p>
                     </div>
                   </div>
-                </label>
+                </div>
               ))}
             </div>
             <button
               type="button"
               onClick={() => setStep(2)}
               className="w-full bg-red-500 text-white py-2 rounded-md hover:bg-red-600"
+              disabled={!selectedCenter} // Disable continue button until a center is selected
             >
               Continue
             </button>
@@ -133,8 +134,8 @@ export const DonationForm = () => {
               <div className="flex items-start space-x-3">
                 <MapPin className="h-5 w-5 text-red-500" />
                 <div>
-                  <p className="font-semibold">Central Blood Bank</p>
-                  <p className="text-sm text-gray-500">123 Main St, City</p>
+                  <p className="font-semibold">{selectedCenter}</p>
+                  <p className="text-sm text-gray-500">Vadodara, Gujarat</p>
                 </div>
               </div>
               <div className="flex items-center space-x-3">

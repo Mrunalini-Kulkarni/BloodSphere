@@ -26,8 +26,8 @@ export const DonationConfirmation = () => {
           <div className="flex items-center">
             <MapPin className="h-5 w-5 text-red-500 mr-3" />
             <div>
-              <p className="font-medium">Central Blood Bank</p>
-              <p className="text-sm text-gray-500">123 Main St, City</p>
+              <p className="font-medium">Parul Sevashram</p>
+              <p className="text-sm text-gray-500">vadodara, Gujarat</p>
             </div>
           </div>
         </div>

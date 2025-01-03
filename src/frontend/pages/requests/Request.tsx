@@ -54,20 +54,25 @@ export const CreateRequest: React.FC = () => {
     }));
   };
 
-  return (
+  const handleSOSClick = () => {
+    const confirmSOS = window.confirm("Are you sure you need SOS service?");
+    if (confirmSOS) {
+      setFormData((prev) => ({ ...prev, urgency: 'high' }));
+      navigate('/requests/SOS');  // Navigate after setting urgency
+    }
+  };
 
+  return (
     <div className="max-w-2xl mx-auto p-6">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold text-gray-900">Create Blood Request</h1>
-        <Link to="/requests/SOS">
         <button
           type="button"
           className="bg-red-600 text-white px-4 py-2 rounded-md font-bold animate-pulse hover:bg-red-700"
-          onClick={() => setFormData(prev => ({ ...prev, urgency: 'high' }))}
+          onClick={handleSOSClick}  // Handling the click here
         >
           SOS
         </button>
-        </Link>
       </div>
       <div className="max-w-2xl mx-auto p-6">
         <h1 className="text-2xl font-bold text-gray-900 mb-6">Create Blood Request</h1>
@@ -183,7 +188,6 @@ export const CreateRequest: React.FC = () => {
           </div>
         </form>
       </div>
-      </div>
-      );
+    </div>
+  );
 };
-
